@@ -18,8 +18,6 @@ LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
 
 ENV MINIO_DOWNLOAD_URL=__MINIO_DOWNLOAD_URL__
 
-ADD __DUPLICACY__ /usr/bin/duplicacy
-
 RUN echo "**** upgrade packages ****" && \
     apk --no-cache --no-progress upgrade && \
     echo "**** install packages ****" && \
