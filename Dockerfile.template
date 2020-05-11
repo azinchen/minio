@@ -32,8 +32,6 @@ RUN echo "**** upgrade packages ****" && \
 COPY --from=builder /s6/ /
 COPY root/ /
 
-RUN chmod +x /app/*
-
 VOLUME ["/app"]
 VOLUME ["/data"]
 
