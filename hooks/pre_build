@@ -1,0 +1,38 @@
+#!/bin/bash
+
+minio_arch()
+{
+    local target=$1
+    if [[ $target == "x86_64" ]]; then
+        platform="amd64"
+    elif [[ $target == "armhf" ]]; then
+        platform="arm"
+    elif [[ $target == "aarch64" ]]; then
+        platform="arm64"
+    fi
+    echo $platform
+}
+
+minio_download_url()
+{
+    local target=$1
+    echo https://dl.min.io/server/minio/release/$(minio_arch $target)
+}
+
+my_dir="$(dirname "${BASH_SOURCE[0]}")"
+source "$my_dir/_env"
+
+docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+for target in ${targets[*]}; do
+    target_file=Dockerfile.target-$target
+    cp Dockerfile.template $target_file
+    if [[ $target == "x86_64" ]]; then
+        sed -i -- "/__QEMU_ARCH__/d" $target_file
+    else
+        sed -i -- "s/__QEMU_ARCH__/$(qemu_static_arch $target)/g" $target_file
+    fi
+    sed -i -- "s%__S6_OVERLAY__%$(s6_overlay_url $target)%g" $target_file
+    sed -i -- "s%__MINIO_DOWNLOAD_URL__%$(minio_download_url $target)%g" $target_file
+    sed -i -- "s%__BASEIMAGE__%$(alpine_base_image $target)%g" $target_file
+done

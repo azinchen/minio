@@ -1,0 +1,44 @@
+FROM alpine:latest AS builder
+
+ADD __S6_OVERLAY__ /tmp/s6-overlay.tar.gz
+
+RUN echo "**** upgrade packages ****" && \
+    apk --no-cache --no-progress upgrade && \
+    echo "**** install packages ****" && \
+    apk --no-cache --no-progress add tar && \
+    echo "**** create folders ****" && \
+    mkdir -p /s6 && \
+    echo "**** extract s6 overlay ****" && \
+    tar xfz /tmp/s6-overlay.tar.gz -C /s6/
+
+FROM __BASEIMAGE__
+COPY qemu-__QEMU_ARCH__-static /usr/bin/
+
+LABEL maintainer="Alexander Zinchenko <alexander@zinchenko.com>"
+
+ENV MINIO_DOWNLOAD_URL=__MINIO_DOWNLOAD_URL__
+
+ADD __DUPLICACY__ /usr/bin/duplicacy
+
+RUN echo "**** upgrade packages ****" && \
+    apk --no-cache --no-progress upgrade && \
+    echo "**** install packages ****" && \
+    apk --no-cache --no-progress add bash curl && \
+    echo "**** create folders ****" && \
+    mkdir -p /app && \
+    mkdir -p /data && \
+    echo "**** cleanup ****" && \
+    rm -rf /tmp/* && \
+    rm -rf /var/cache/apk/*
+
+COPY --from=builder /s6/ /
+COPY root/ /
+
+RUN chmod +x /app/*
+
+VOLUME ["/app"]
+VOLUME ["/data"]
+
+WORKDIR  /app
+
+ENTRYPOINT ["/init"]

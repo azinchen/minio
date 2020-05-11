@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+minio_file=/app/minio
+
+rm -f $minio_file
+touch $minio_file
+
+curl -s $MINIO_DOWNLOAD_URL/minio -o $minio_file
+chmod +x $minio_file
+
+exit 0
