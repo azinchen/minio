@@ -1,5 +1,7 @@
 # minio
-[dockerhub-badge]
+
+[![Docker Pulls][dockerhub-badge]][dockerhub-link]
+
 Minio server Docker image. Always up-to-date! Works everywhere!
 
 ### Minio Server
