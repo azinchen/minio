@@ -18,7 +18,8 @@ Right now these Docker images of Minio server are compatible with `arm64`, `armh
 
 You can run the following command to stand up a standalone instance of Minio Server on Docker:
 
-```docker run \
+```
+docker run \
   -v path_to_data:/data \
   -p 9000:9000 \
   azinchen/minio
