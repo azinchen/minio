@@ -1,4 +1,4 @@
-# minio
+# Minio
 
 [![Docker Pulls][dockerhub-badge]][dockerhub-link]
 
