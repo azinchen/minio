@@ -21,7 +21,7 @@ ENV MINIO_DOWNLOAD_URL=__MINIO_DOWNLOAD_URL__
 RUN echo "**** upgrade packages ****" && \
     apk --no-cache --no-progress upgrade && \
     echo "**** install packages ****" && \
-    apk --no-cache --no-progress add bash curl && \
+    apk --no-cache --no-progress add bash curl ca-certificates && \
     echo "**** create folders ****" && \
     mkdir -p /app && \
     mkdir -p /data && \
