@@ -13,3 +13,7 @@ manifests:
       architecture: arm64
       os: linux
       variant: v8
+  - image: __IMAGE_NAME__-ppc64le
+    platform:
+      architecture: ppc64le
+      os: linux

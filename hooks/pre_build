@@ -4,11 +4,13 @@ minio_arch()
 {
     local target=$1
     if [[ $target == "x86_64" ]]; then
-        platform="amd64"
+        platform=amd64
     elif [[ $target == "armhf" ]]; then
-        platform="arm"
+        platform=arm
     elif [[ $target == "aarch64" ]]; then
-        platform="arm64"
+        platform=arm64
+    elif [[ $target == "ppc64le" ]]; then
+        platform=ppc64le
     fi
     echo $platform
 }
