@@ -24,8 +24,8 @@ You can run the following command to stand up a standalone instance of Minio Ser
 ```
 docker run \
   -v path_to_data:/data \
-  -e MINIO_ACCESS_KEY=minio
-  -e MINIO_SECRET_KEY=miniosecret
+  -e MINIO_ACCESS_KEY=access_key \
+  -e MINIO_SECRET_KEY=secret_key \
   -p 9000:9000 \
   azinchen/minio
 ```
